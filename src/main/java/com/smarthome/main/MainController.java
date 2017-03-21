@@ -6,19 +6,99 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-/**
- * Created by Olga on 06.03.2017.
- */
+import java.io.*;
+
 
 @Controller
 
 public class MainController  {
-    @RequestMapping(value = "/home.html")
-    public ModelAndView home(@RequestParam ("light") String lightState){
+    @RequestMapping(value = "/home.html", method = RequestMethod.GET)
+    public ModelAndView home(@RequestParam(value = "light",required = false) String lightState,
+                             @RequestParam(value = "errorMessage",required = false) String msg) throws IOException {
+
         ModelAndView mv = new ModelAndView();
-        mv.addObject("lightState",lightState);
+
+        if (readFromFile().equals(lightState)){
+            mv.addObject("errorMessage","Light already turn on or turn off");
+            return mv.addObject("lightState", lightState);
+        }
+        else if (lightState != null){
+            saveToFile(lightState);
+            return mv.addObject("lightState",lightState);
+        }
+
+
+        mv.addObject("lightState",readFromFile());
         return mv;
 
     }
+/*
 
+    @RequestMapping(value = "/home.html?light=on", method = RequestMethod.GET)
+    public ModelAndView lightOn() throws IOException {
+
+        ModelAndView mv = new ModelAndView();
+
+        String lightState = readFromFile();
+
+        if (lightState == "off"){
+            mv.addObject("lightState","on");
+        }
+        else mv.addObject("errorMessage","Light already turn on!");
+
+        return mv;
+    }
+
+
+    @RequestMapping(value = "/home.html?light=off", method = RequestMethod.GET)
+    public ModelAndView lightOff() throws IOException {
+
+        ModelAndView mv = new ModelAndView();
+
+        String lightState = readFromFile();
+
+        if (lightState == "on"){
+            mv.addObject("lightState","off");
+        }
+        else mv.addObject("errorMessage","Light already turn off!");
+
+        return mv;
+    }
+*/
+
+    private void saveToFile(String state){
+        File file = new File("C:\\Users\\Olga\\IdeaProjects\\smarthomemvc\\src\\main\\webapp\\docs\\states.txt");
+
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            byte[] stateBytes =state.getBytes();
+
+            fileOutputStream.write(stateBytes);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String readFromFile() throws IOException {
+
+        File file = new File("C:\\Users\\Olga\\IdeaProjects\\smarthomemvc\\src\\main\\webapp\\docs\\states.txt");
+
+        FileInputStream fileInputStream = new FileInputStream(file);
+
+        try(ByteArrayOutputStream result = new ByteArrayOutputStream()) {
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = fileInputStream.read(buffer)) != -1) {
+                result.write(buffer, 0, length);
+            }
+            return result.toString("UTF-8");
+        }
+    }
 }
