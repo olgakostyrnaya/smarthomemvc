@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="smarthome" />
         <module name="smarthomemvc" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="smarthome" target="1.7" />
       <module name="smarthomemvc" target="1.7" />
     </bytecodeTargetLevel>
   </component>

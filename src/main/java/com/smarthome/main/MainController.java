@@ -19,7 +19,6 @@ public class MainController  {
         ModelAndView mv = new ModelAndView();
 
         if (readFromFile().equals(lightState)){
-            mv.addObject("errorMessage","Light already turn on or turn off");
             return mv.addObject("lightState", lightState);
         }
         else if (lightState != null){
@@ -27,44 +26,9 @@ public class MainController  {
             return mv.addObject("lightState",lightState);
         }
 
-
         mv.addObject("lightState",readFromFile());
         return mv;
-
     }
-/*
-
-    @RequestMapping(value = "/home.html?light=on", method = RequestMethod.GET)
-    public ModelAndView lightOn() throws IOException {
-
-        ModelAndView mv = new ModelAndView();
-
-        String lightState = readFromFile();
-
-        if (lightState == "off"){
-            mv.addObject("lightState","on");
-        }
-        else mv.addObject("errorMessage","Light already turn on!");
-
-        return mv;
-    }
-
-
-    @RequestMapping(value = "/home.html?light=off", method = RequestMethod.GET)
-    public ModelAndView lightOff() throws IOException {
-
-        ModelAndView mv = new ModelAndView();
-
-        String lightState = readFromFile();
-
-        if (lightState == "on"){
-            mv.addObject("lightState","off");
-        }
-        else mv.addObject("errorMessage","Light already turn off!");
-
-        return mv;
-    }
-*/
 
     private void saveToFile(String state){
         File file = new File("C:\\Users\\Olga\\IdeaProjects\\smarthomemvc\\src\\main\\webapp\\docs\\states.txt");
