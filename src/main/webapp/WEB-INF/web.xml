@@ -31,10 +31,12 @@
         <servlet-name>default</servlet-name>
         <url-pattern>*.js</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>*.html</url-pattern>
     </servlet-mapping>
+
 
     <context-param>
         <param-name>contextConfigLocation</param-name>

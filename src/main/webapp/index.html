@@ -1,43 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script src="websocket.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Hello WebSocket</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="/main.css" rel="stylesheet">-->
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/app.js"></script>
 </head>
 <body>
-
-<div id="wrapper">
-    <h1>Java Websocket Home</h1>
-    <p>Welcome to the Java WebSocket Home. Click the Add a device button to start adding devices.</p>
-    <br />
-    <div id="addDevice">
-        <div class="button"> <a href="#" OnClick="showForm()">Add a device</a> </div>
-        <form id="addDeviceForm">
-            <h3>Add a new device</h3>
-            <span>Name: <input type="text" name="device_name" id="device_name"></span>
-            <span>Type:
-                        <select id="device_type">
-                            <option name="type" value="Appliance">Appliance</option>
-                            <option name="type" value="Electronics">Electronics</option>
-                            <option name="type" value="Lights">Lights</option>
-                            <option name="type" value="Other">Other</option>
-                        </select></span>
-
-            <span>Description:<br />
-                        <textarea name="description" id="device_description" rows="2" cols="50"></textarea>
-                    </span>
-
-            <input type="button" class="button" value="Add" onclick=formSubmit()>
-            <input type="reset" class="button" value="Cancel" onclick=hideForm()>
-        </form>
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+    enabled. Please enable
+    Javascript and reload this page!</h2></noscript>
+<div id="main-content" class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="connect">WebSocket connection:</label>
+                    <button id="connect" class="btn btn-default" type="submit">Connect</button>
+                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="state">State of light</label>
+                    <input type="text" id="state" class="form-control" placeholder="type into state of light">
+                </div>
+                <button id="send" class="btn btn-default" type="submit">Send</button>
+            </form>
+        </div>
     </div>
-    <br />
-    <h3>Currently connected devices:</h3>
-    <div id="content">
+    <div class="row">
+        <div class="col-md-12">
+            <table id="checkingLightState" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Light</th>
+                </tr>
+                </thead>
+                <tbody id="light">
+                </tbody>
+            </table>
+        </div>
     </div>
+    </form>
 </div>
-
 </body>
 </html>

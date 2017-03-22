@@ -12,7 +12,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="smarthome" target="1.7" />
-      <module name="smarthomemvc" target="1.7" />
+      <module name="smarthomemvc" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
